@@ -1,0 +1,26 @@
+{
+  "entity.sheep_skeleton.ambient": {
+    "sounds": [
+      "bones:sheep_skeleton/say1",
+      "bones:sheep_skeleton/say2",
+      "bones:sheep_skeleton/say3"
+    ],
+    "subtitle": "bones.subtitle.sheep_skeleton.ambient"
+  },
+  "entity.sheep_skeleton.death": {
+    "sounds": [
+      "bones:sheep_skeleton/say1",
+      "bones:sheep_skeleton/say2",
+      "bones:sheep_skeleton/say3"
+    ],
+    "subtitle": "bones.subtitle.sheep_skeleton.death"
+  },
+  "entity.sheep_skeleton.hurt": {
+    "sounds": [
+      "bones:sheep_skeleton/say1",
+      "bones:sheep_skeleton/say2",
+      "bones:sheep_skeleton/say3"
+    ],
+    "subtitle": "bones.subtitle.sheep_skeleton.hurt"
+  }
+}
