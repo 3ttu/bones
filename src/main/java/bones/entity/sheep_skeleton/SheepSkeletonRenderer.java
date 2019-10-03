@@ -13,14 +13,14 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @OnlyIn(Dist.CLIENT)
 public class SheepSkeletonRenderer extends MobRenderer<SheepSkeletonEntity, SheepSkeletonModel> {
 
-    private static final ResourceLocation SHEARED_SHEEP_TEXTURES = new ResourceLocation(Bones.MODID, "textures/entity/sheep_skeleton/sheep_skeleton.png");
+    private static final ResourceLocation TEXTURES = new ResourceLocation(Bones.MODID, "textures/entity/sheep_skeleton/sheep_skeleton.png");
 
     public SheepSkeletonRenderer(EntityRendererManager renderManagerIn) {
         super(renderManagerIn, new SheepSkeletonModel(), 0.7F);
-        //this.addLayer(new SheepWoolLayer(this));
+        addLayer(new SheepSkeletonFleshLayer(this));
     }
 
     protected ResourceLocation getEntityTexture(SheepSkeletonEntity entity) {
-        return SHEARED_SHEEP_TEXTURES;
+        return TEXTURES;
     }
 }

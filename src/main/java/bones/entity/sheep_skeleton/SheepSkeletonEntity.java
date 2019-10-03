@@ -11,6 +11,9 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -22,6 +25,9 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftforge.common.IShearable {
+
+    private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SheepSkeletonEntity.class, DataSerializers.BOOLEAN);
+
 
     public SheepSkeletonEntity(EntityType<? extends SheepSkeletonEntity> type, World worldIn) {
         super(type, worldIn);
@@ -44,6 +50,11 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.23F);
     }
 
+    protected void registerData() {
+        super.registerData();
+        dataManager.register(IS_SHEARED, false);
+    }
+
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return 0.95F * sizeIn.height;
     }
@@ -56,16 +67,20 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
 
     @Override
     public java.util.List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IWorld world, BlockPos pos, int fortune) {
-        java.util.List<ItemStack> ret = new java.util.ArrayList<>();
+        java.util.List<ItemStack> result = new java.util.ArrayList<>();
         if (!this.world.isRemote) {
-            // todo this.setSheared(true);
+            dataManager.set(IS_SHEARED, true);
             int i = 1 + this.rand.nextInt(3);
 
             for(int j = 0; j < i; ++j) {
-                // todo ret.add(new ItemStack(WOOL_BY_COLOR.get(this.getFleeceColor())));
+                result.add(new ItemStack(Items.MUTTON));
             }
         }
-        return ret;
+        return result;
+    }
+
+    public boolean isSheared() {
+        return dataManager.get(IS_SHEARED);
     }
 
     @Override
