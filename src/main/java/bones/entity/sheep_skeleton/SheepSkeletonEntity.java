@@ -24,6 +24,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
+@SuppressWarnings("deprecation")
 public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftforge.common.IShearable {
 
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SheepSkeletonEntity.class, DataSerializers.BOOLEAN);
@@ -76,6 +77,7 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
                 result.add(new ItemStack(Items.MUTTON));
             }
         }
+        this.playSound(SoundEvents.SHEEP_SKELETON_SHEAR, 1, 1);
         return result;
     }
 

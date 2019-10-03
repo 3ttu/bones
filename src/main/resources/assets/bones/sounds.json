@@ -22,5 +22,12 @@
       "bones:sheep_skeleton/say3"
     ],
     "subtitle": "bones.subtitle.sheep_skeleton.hurt"
+  },
+  "entity.sheep_skeleton.shear": {
+    "sounds": [
+      "mob/slime/attack1",
+      "mob/slime/attack2"
+    ],
+    "subtitle": "bones.subtitle.sheep_skeleton.shear"
   }
 }
