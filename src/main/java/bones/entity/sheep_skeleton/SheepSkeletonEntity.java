@@ -1,6 +1,6 @@
 package bones.entity.sheep_skeleton;
 
-import bones.Bones;
+import bones.setup.Entities;
 import bones.setup.SoundEvents;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockState;
@@ -14,11 +14,15 @@ import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
@@ -53,7 +57,7 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
 
     protected void registerData() {
         super.registerData();
-        dataManager.register(IS_SHEARED, false);
+        dataManager.register(IS_SHEARED, true);
     }
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
@@ -63,7 +67,7 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return Bones.SHEEP_SKELETON_ENTITY_TYPE.create(ageable.world);
+        return Entities.SHEEP_SKELETON.create(ageable.world);
     }
 
     @Override
@@ -81,8 +85,34 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
         return result;
     }
 
+    @Override
+    public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos) {
+        return !isSheared();
+    }
+
     public boolean isSheared() {
         return dataManager.get(IS_SHEARED);
+    }
+
+    @Override
+    public boolean processInteract(PlayerEntity player, Hand hand) {
+        if (!super.processInteract(player, hand)) {
+            ItemStack stack = player.getHeldItem(hand);
+            if (stack.getItem() == Items.ROTTEN_FLESH && isSheared()) {
+                consumeItemFromStack(player, stack);
+                if (!world.isRemote) {
+                    if (rand.nextInt(3) == 0) {
+                        dataManager.set(IS_SHEARED, false);
+                    }
+                } else {
+                    for (int i = 4 + rand.nextInt(4); i > 0; i--) {
+                        world.addParticle(ParticleTypes.HAPPY_VILLAGER, posX + rand.nextFloat() * getWidth() * 2 - getWidth(), posY + 0.5 + rand.nextFloat() * getHeight(), posZ + rand.nextFloat() * getWidth() * 2 - getWidth(), 0, 0, 0);
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
