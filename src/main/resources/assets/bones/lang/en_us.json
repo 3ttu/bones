@@ -3,5 +3,7 @@
   "bones.subtitle.skeleton_sheep.death": "Skeleton sheep dies",
   "bones.subtitle.skeleton_sheep.hurt": "Skeleton sheep hurts",
   "bones.subtitle.skeleton_sheep.shear": "Skeleton sheep harvested",
+  "entity.bones.skeleton_sheep": "Skeleton Sheep",
+
   "item.bones.skeleton_sheep_spawn_egg": "Skeleton Sheep Spawn Egg"
 }
