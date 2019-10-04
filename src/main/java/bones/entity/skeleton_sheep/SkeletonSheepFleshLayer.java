@@ -13,7 +13,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 public class SkeletonSheepFleshLayer extends LayerRenderer<SkeletonSheepEntity, SkeletonSheepModel> {
 
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_sheep/sheep_skeleton_flesh.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_sheep/skeleton_sheep_flesh.png");
     private final SkeletonSheepFleshModel skeletonSheepFleshModel = new SkeletonSheepFleshModel();
 
     public SkeletonSheepFleshLayer(IEntityRenderer<SkeletonSheepEntity, SkeletonSheepModel> renderer) {
