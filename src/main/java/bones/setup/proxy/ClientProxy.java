@@ -1,4 +1,4 @@
-package bones.setup;
+package bones.setup.proxy;
 
 import bones.entity.sheep_skeleton.SheepSkeletonEntity;
 import bones.entity.sheep_skeleton.SheepSkeletonRenderer;
