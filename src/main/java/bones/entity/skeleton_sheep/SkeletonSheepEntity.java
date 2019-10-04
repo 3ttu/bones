@@ -1,4 +1,4 @@
-package bones.entity.sheep_skeleton;
+package bones.entity.skeleton_sheep;
 
 import bones.setup.Entities;
 import bones.setup.SoundEvents;
@@ -29,12 +29,12 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
-public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftforge.common.IShearable {
+public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftforge.common.IShearable {
 
-    private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SheepSkeletonEntity.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SkeletonSheepEntity.class, DataSerializers.BOOLEAN);
 
 
-    public SheepSkeletonEntity(EntityType<? extends SheepSkeletonEntity> type, World worldIn) {
+    public SkeletonSheepEntity(EntityType<? extends SkeletonSheepEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
@@ -67,7 +67,7 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
     @Nullable
     @Override
     public AgeableEntity createChild(AgeableEntity ageable) {
-        return Entities.SHEEP_SKELETON.create(ageable.world);
+        return Entities.SKELETON_SHEEP.create(ageable.world);
     }
 
     @Override
@@ -81,7 +81,7 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
                 result.add(new ItemStack(Items.MUTTON));
             }
         }
-        this.playSound(SoundEvents.SHEEP_SKELETON_SHEAR, 1, 1);
+        this.playSound(SoundEvents.SKELETON_SHEEP_SHEAR, 1, 1);
         return result;
     }
 
@@ -117,17 +117,17 @@ public class SheepSkeletonEntity extends AnimalEntity implements net.minecraftfo
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SHEEP_SKELETON_AMBIENT;
+        return SoundEvents.SKELETON_SHEEP_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.SHEEP_SKELETON_HURT;
+        return SoundEvents.SKELETON_SHEEP_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SHEEP_SKELETON_DEATH;
+        return SoundEvents.SKELETON_SHEEP_DEATH;
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn) {

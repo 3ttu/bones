@@ -1,7 +1,7 @@
 {
-  "bones.subtitle.sheep_skeleton.ambient": "Sheep skeleton baahs",
-  "bones.subtitle.sheep_skeleton.death": "Sheep skeleton dies",
-  "bones.subtitle.sheep_skeleton.hurt": "Sheep skeleton hurts",
-  "bones.subtitle.sheep_skeleton.shear": "Sheep skeleton harvested",
-  "item.bones.sheep_skeleton_spawn_egg": "Sheep Skeleton Spawn Egg"
+  "bones.subtitle.skeleton_sheep.ambient": "Skeleton sheep baahs",
+  "bones.subtitle.skeleton_sheep.death": "Skeleton sheep dies",
+  "bones.subtitle.skeleton_sheep.hurt": "Skeleton sheep hurts",
+  "bones.subtitle.skeleton_sheep.shear": "Skeleton sheep harvested",
+  "item.bones.skeleton_sheep_spawn_egg": "Skeleton Sheep Spawn Egg"
 }

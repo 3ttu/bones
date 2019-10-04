@@ -1,6 +1,6 @@
 package bones.setup;
 
-import bones.entity.sheep_skeleton.SheepSkeletonEntity;
+import bones.entity.skeleton_sheep.SkeletonSheepEntity;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -18,19 +18,19 @@ import static bones.Bones.MODID;
 
 public class Entities {
 
-    public static final EntityType<SheepSkeletonEntity> SHEEP_SKELETON = EntityType.Builder.create(SheepSkeletonEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<SkeletonSheepEntity> SKELETON_SHEEP = EntityType.Builder.create(SkeletonSheepEntity::new, EntityClassification.CREATURE)
             .size(0.9F, 1.3F)
             .immuneToFire()
-            .build("sheep_skeleton");
+            .build("skeleton_sheep");
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
-        SHEEP_SKELETON.setRegistryName(new ResourceLocation(MODID, "sheep_skeleton"));
+        SKELETON_SHEEP.setRegistryName(new ResourceLocation(MODID, "skeleton_sheep"));
 
         event.getRegistry().registerAll(
-                SHEEP_SKELETON
+                SKELETON_SHEEP
         );
 
-        EntitySpawnPlacementRegistry.register(SHEEP_SKELETON, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
+        EntitySpawnPlacementRegistry.register(SKELETON_SHEEP, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
     }
 
     private static boolean mobCondition(EntityType<? extends MobEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -44,10 +44,10 @@ public class Entities {
         spookyBiomes.removeAll(netherBiomes);
 
         for (Biome biome : netherBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SHEEP_SKELETON, 4, 2, 6));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 4, 2, 6));
         }
         for (Biome biome : spookyBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SHEEP_SKELETON, 1, 1, 2));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 2));
         }
     }
 }

@@ -1,33 +1,33 @@
 {
-  "entity.sheep_skeleton.ambient": {
+  "entity.skeleton_sheep.ambient": {
     "sounds": [
-      "bones:sheep_skeleton/say1",
-      "bones:sheep_skeleton/say2",
-      "bones:sheep_skeleton/say3"
+      "bones:skeleton_sheep/say1",
+      "bones:skeleton_sheep/say2",
+      "bones:skeleton_sheep/say3"
     ],
-    "subtitle": "bones.subtitle.sheep_skeleton.ambient"
+    "subtitle": "bones.subtitle.skeleton_sheep.ambient"
   },
-  "entity.sheep_skeleton.death": {
+  "entity.skeleton_sheep.death": {
     "sounds": [
-      "bones:sheep_skeleton/say1",
-      "bones:sheep_skeleton/say2",
-      "bones:sheep_skeleton/say3"
+      "bones:skeleton_sheep/say1",
+      "bones:skeleton_sheep/say2",
+      "bones:skeleton_sheep/say3"
     ],
-    "subtitle": "bones.subtitle.sheep_skeleton.death"
+    "subtitle": "bones.subtitle.skeleton_sheep.death"
   },
-  "entity.sheep_skeleton.hurt": {
+  "entity.skeleton_sheep.hurt": {
     "sounds": [
-      "bones:sheep_skeleton/say1",
-      "bones:sheep_skeleton/say2",
-      "bones:sheep_skeleton/say3"
+      "bones:skeleton_sheep/say1",
+      "bones:skeleton_sheep/say2",
+      "bones:skeleton_sheep/say3"
     ],
-    "subtitle": "bones.subtitle.sheep_skeleton.hurt"
+    "subtitle": "bones.subtitle.skeleton_sheep.hurt"
   },
-  "entity.sheep_skeleton.shear": {
+  "entity.skeleton_sheep.shear": {
     "sounds": [
       "mob/slime/attack1",
       "mob/slime/attack2"
     ],
-    "subtitle": "bones.subtitle.sheep_skeleton.shear"
+    "subtitle": "bones.subtitle.skeleton_sheep.shear"
   }
 }

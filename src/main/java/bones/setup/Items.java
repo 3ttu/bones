@@ -13,8 +13,8 @@ public class Items {
     public static void register(RegistryEvent.Register<Item> event) {
         Item.Properties properties = new Item.Properties().group(ItemGroup.MISC);
         event.getRegistry().registerAll(
-                new SpawnEggItem(Entities.SHEEP_SKELETON, 0xffffff, 0xffd9c7, properties)
-                        .setRegistryName(new ResourceLocation(MODID, "sheep_skeleton_spawn_egg"))
+                new SpawnEggItem(Entities.SKELETON_SHEEP, 0xffffff, 0xffd9c7, properties)
+                        .setRegistryName(new ResourceLocation(MODID, "skeleton_sheep_spawn_egg"))
         );
     }
 }
