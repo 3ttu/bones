@@ -5,9 +5,13 @@ import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.Random;
 
 import static bones.Bones.MODID;
@@ -35,6 +39,15 @@ public class Entities {
     }
 
     public static void addSpawns() {
+        Collection<Biome> netherBiomes = BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER);
+        Collection<Biome> spookyBiomes = new HashSet<>(BiomeDictionary.getBiomes(BiomeDictionary.Type.SPOOKY));
+        spookyBiomes.removeAll(netherBiomes);
 
+        for (Biome biome : netherBiomes) {
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SHEEP_SKELETON, 4, 2, 6));
+        }
+        for (Biome biome : spookyBiomes) {
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SHEEP_SKELETON, 1, 1, 2));
+        }
     }
 }
