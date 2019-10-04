@@ -44,10 +44,10 @@ public class Entities {
         spookyBiomes.removeAll(netherBiomes);
 
         for (Biome biome : netherBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 4, 2, 6));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 24, 3, 7));
         }
         for (Biome biome : spookyBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 2));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 3));
         }
     }
 }
