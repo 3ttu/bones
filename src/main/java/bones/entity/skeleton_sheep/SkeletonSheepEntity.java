@@ -63,6 +63,18 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
         dataManager.register(IS_SHEARED, true);
     }
 
+    @Override
+    public void readAdditional(CompoundNBT compound) {
+        super.readAdditional(compound);
+        dataManager.set(IS_SHEARED, !compound.getBoolean("IsShearable"));
+    }
+
+    @Override
+    public void writeAdditional(CompoundNBT compound) {
+        super.writeAdditional(compound);
+        compound.putBoolean("IsShearable", !isSheared());
+    }
+
     @Nullable
     @Override
     public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
