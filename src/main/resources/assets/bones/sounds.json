@@ -29,5 +29,27 @@
       "mob/slime/attack2"
     ],
     "subtitle": "bones.subtitle.skeleton_sheep.shear"
+  },
+  "entity.skeleton_pig.ambient": {
+    "sounds": [
+      "bones:skeleton_pig/say1",
+      "bones:skeleton_pig/say2",
+      "bones:skeleton_pig/say3"
+    ],
+    "subtitle": "bones.subtitle.skeleton_pig.ambient"
+  },
+  "entity.skeleton_pig.death": {
+    "sounds": [
+      "bones:skeleton_pig/death"
+    ],
+    "subtitle": "bones.subtitle.skeleton_pig.death"
+  },
+  "entity.skeleton_pig.hurt": {
+    "sounds": [
+      "bones:skeleton_pig/say1",
+      "bones:skeleton_pig/say2",
+      "bones:skeleton_pig/say3"
+    ],
+    "subtitle": "bones.subtitle.skeleton_pig.hurt"
   }
 }

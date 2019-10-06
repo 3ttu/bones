@@ -1,5 +1,7 @@
 package bones.setup.proxy;
 
+import bones.entity.skeleton_pig.SkeletonPigEntity;
+import bones.entity.skeleton_pig.SkeletonPigRenderer;
 import bones.entity.skeleton_sheep.SkeletonSheepEntity;
 import bones.entity.skeleton_sheep.SkeletonSheepRenderer;
 import net.minecraft.client.Minecraft;
@@ -12,6 +14,7 @@ public class ClientProxy implements IProxy {
     @Override
     public void init() {
         RenderingRegistry.registerEntityRenderingHandler(SkeletonSheepEntity.class, SkeletonSheepRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SkeletonPigEntity.class, SkeletonPigRenderer::new);
     }
 
     @Override

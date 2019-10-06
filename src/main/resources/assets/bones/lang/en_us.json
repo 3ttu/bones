@@ -3,7 +3,13 @@
   "bones.subtitle.skeleton_sheep.death": "Skeleton sheep dies",
   "bones.subtitle.skeleton_sheep.hurt": "Skeleton sheep hurts",
   "bones.subtitle.skeleton_sheep.shear": "Skeleton sheep harvested",
-  "entity.bones.skeleton_sheep": "Skeleton Sheep",
+  "bones.subtitle.skeleton_pig.ambient": "Skeleton pig oinks",
+  "bones.subtitle.skeleton_pig.death": "Skeleton pig dies",
+  "bones.subtitle.skeleton_pig.hurt": "Skeleton pig hurts",
 
-  "item.bones.skeleton_sheep_spawn_egg": "Skeleton Sheep Spawn Egg"
+  "entity.bones.skeleton_sheep": "Skeleton Sheep",
+  "entity.bones.skeleton_pig": "Skeleton Pig",
+  "item.bones.skeleton_sheep_spawn_egg": "Skeleton Sheep Spawn Egg",
+  "item.bones.skeleton_pig_spawn_egg": "Skeleton Pig Spawn Egg",
+  "item.bones.porkchop_on_a_stick": "Porkchop on a Stick"
 }

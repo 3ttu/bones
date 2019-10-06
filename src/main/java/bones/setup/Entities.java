@@ -1,5 +1,6 @@
 package bones.setup;
 
+import bones.entity.skeleton_pig.SkeletonPigEntity;
 import bones.entity.skeleton_sheep.SkeletonSheepEntity;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
@@ -22,15 +23,22 @@ public class Entities {
             .size(0.9F, 1.3F)
             .immuneToFire()
             .build("skeleton_sheep");
+    public static final EntityType<SkeletonPigEntity> SKELETON_PIG = EntityType.Builder.create(SkeletonPigEntity::new, EntityClassification.CREATURE)
+            .size(0.9F, 0.9F)
+            .immuneToFire()
+            .build("skeleton_pig");
 
     public static void register(RegistryEvent.Register<EntityType<?>> event) {
         SKELETON_SHEEP.setRegistryName(new ResourceLocation(MODID, "skeleton_sheep"));
+        SKELETON_PIG.setRegistryName(new ResourceLocation(MODID, "skeleton_pig"));
 
         event.getRegistry().registerAll(
-                SKELETON_SHEEP
+                SKELETON_SHEEP,
+                SKELETON_PIG
         );
 
         EntitySpawnPlacementRegistry.register(SKELETON_SHEEP, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
+        EntitySpawnPlacementRegistry.register(SKELETON_PIG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
     }
 
     private static boolean mobCondition(EntityType<? extends MobEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
@@ -45,8 +53,10 @@ public class Entities {
 
         for (Biome biome : netherBiomes) {
             biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 24, 3, 7));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_PIG, 24, 2, 5));
         }
         for (Biome biome : spookyBiomes) {
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 3));
             biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 3));
         }
     }
