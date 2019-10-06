@@ -1,0 +1,10 @@
+{
+  "1.14.4": {
+    "1.14.4-1.0.0": "initial release",
+    "1.14.4-1.1.0": "added skeleton pigs\nvarious fixes"
+  },
+  "promos": {
+    "1.14.4-latest": "1.14.4-1.1.0",
+    "1.14.4-recommended": "1.14.4-1.1.0"
+  }
+}
