@@ -45,7 +45,7 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
         this.goalSelector.addGoal(2, new BreedGoal(this, 1));
-        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.fromItems(Items.ROTTEN_FLESH), false));
+        this.goalSelector.addGoal(3, new TemptGoal(this, 1.1, Ingredient.fromItems(Items.ROTTEN_FLESH, Items.MUTTON), false));
         this.goalSelector.addGoal(4, new FollowParentGoal(this, 1.1));
         this.goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1));
         this.goalSelector.addGoal(7, new LookAtGoal(this, PlayerEntity.class, 6));
@@ -160,6 +160,6 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
 
     @Override
     public boolean isBreedingItem(ItemStack stack) {
-        return stack.getItem() == Items.ROTTEN_FLESH;
+        return stack.getItem() == Items.MUTTON;
     }
 }
