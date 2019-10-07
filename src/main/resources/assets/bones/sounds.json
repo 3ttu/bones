@@ -51,5 +51,28 @@
       "bones:skeleton_pig/say3"
     ],
     "subtitle": "bones.subtitle.skeleton_pig.hurt"
+  },
+  "entity.skeleton_cow.ambient": {
+    "sounds": [
+      "bones:skeleton_cow/say1",
+      "bones:skeleton_cow/say2"
+    ],
+    "subtitle": "bones.subtitle.skeleton_cow.ambient"
+  },
+  "entity.skeleton_cow.death": {
+    "sounds": [
+      "bones:skeleton_cow/hurt1",
+      "bones:skeleton_cow/hurt2",
+      "bones:skeleton_cow/hurt3"
+    ],
+    "subtitle": "bones.subtitle.skeleton_cow.death"
+  },
+  "entity.skeleton_cow.hurt": {
+    "sounds": [
+      "bones:skeleton_cow/hurt1",
+      "bones:skeleton_cow/hurt2",
+      "bones:skeleton_cow/hurt3"
+    ],
+    "subtitle": "bones.subtitle.skeleton_cow.hurt"
   }
 }

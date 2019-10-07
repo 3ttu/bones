@@ -14,8 +14,8 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class SkeletonPigRenderer extends MobRenderer<SkeletonPigEntity, SkeletonPigModel> {
     private static final ResourceLocation PIG_TEXTURES = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_pig.png");
 
-    public SkeletonPigRenderer(EntityRendererManager renderManagerIn) {
-        super(renderManagerIn, new SkeletonPigModel(0), 0.7F);
+    public SkeletonPigRenderer(EntityRendererManager renderManager) {
+        super(renderManager, new SkeletonPigModel(0), 0.7F);
         this.addLayer(new SkeletonPigSaddleLayer(this));
     }
 

@@ -1,5 +1,6 @@
 package bones.entity.skeleton_sheep;
 
+import bones.Bones;
 import bones.setup.Entities;
 import bones.setup.SoundEvents;
 import mcp.MethodsReturnNonnullByDefault;
@@ -18,6 +19,7 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
@@ -36,6 +38,7 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
 
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SkeletonSheepEntity.class, DataSerializers.BOOLEAN);
 
+    private static final ResourceLocation LOOTTABLE_UNSHEARED = new ResourceLocation(Bones.MODID, "entities/skeleton_sheep_unsheared");
 
     public SkeletonSheepEntity(EntityType<? extends SkeletonSheepEntity> type, World worldIn) {
         super(type, worldIn);
@@ -73,6 +76,14 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putBoolean("IsShearable", !isSheared());
+    }
+
+    @Override
+    protected ResourceLocation getLootTable() {
+        if (!isSheared()) {
+            return LOOTTABLE_UNSHEARED;
+        }
+        return super.getLootTable();
     }
 
     @Nullable

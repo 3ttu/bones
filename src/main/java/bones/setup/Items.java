@@ -19,10 +19,12 @@ public class Items {
         Item.Properties eggProperties = new Item.Properties().group(ItemGroup.MISC);
         event.getRegistry().registerAll(
                 PORKCHOP_ON_A_STICK,
-                new SpawnEggItem(Entities.SKELETON_SHEEP, 0xffffff, 0xffd9c7, eggProperties)
+                new SpawnEggItem(Entities.SKELETON_SHEEP, 0xffffff, 15198183, eggProperties)
                         .setRegistryName(new ResourceLocation(MODID, "skeleton_sheep_spawn_egg")),
-                new SpawnEggItem(Entities.SKELETON_PIG, 0xffffff, 0xde9bb5, eggProperties)
-                        .setRegistryName(new ResourceLocation(MODID, "skeleton_pig_spawn_egg"))
+                new SpawnEggItem(Entities.SKELETON_PIG, 0xffffff, 15771042, eggProperties)
+                        .setRegistryName(new ResourceLocation(MODID, "skeleton_pig_spawn_egg")),
+                new SpawnEggItem(Entities.SKELETON_COW, 0xffffff, 4470310, eggProperties)
+                        .setRegistryName(new ResourceLocation(MODID, "skeleton_cow_spawn_egg"))
         );
     }
 }
