@@ -44,6 +44,7 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
         super(type, worldIn);
     }
 
+    @Override
     protected void registerGoals() {
         this.goalSelector.addGoal(0, new SwimGoal(this));
         this.goalSelector.addGoal(1, new PanicGoal(this, 1.25));
@@ -55,12 +56,14 @@ public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftfo
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
+    @Override
     protected void registerAttributes() {
         super.registerAttributes();
         this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
         this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.23F);
     }
 
+    @Override
     protected void registerData() {
         super.registerData();
         dataManager.register(IS_SHEARED, true);

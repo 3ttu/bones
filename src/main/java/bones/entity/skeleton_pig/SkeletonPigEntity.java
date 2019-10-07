@@ -42,6 +42,7 @@ public class SkeletonPigEntity extends AnimalEntity {
         super(entityType, world);
     }
 
+    @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
@@ -54,17 +55,20 @@ public class SkeletonPigEntity extends AnimalEntity {
         goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
+    @Override
     protected void registerAttributes() {
         super.registerAttributes();
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12);
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
     }
 
+    @Override
     @Nullable
     public Entity getControllingPassenger() {
         return getPassengers().isEmpty() ? null : getPassengers().get(0);
     }
 
+    @Override
     public boolean canBeSteered() {
         Entity entity = getControllingPassenger();
         if (!(entity instanceof PlayerEntity)) {
@@ -75,6 +79,7 @@ public class SkeletonPigEntity extends AnimalEntity {
         }
     }
 
+    @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         if (BOOST_TIME.equals(key) && world.isRemote) {
             boosting = true;
@@ -85,22 +90,26 @@ public class SkeletonPigEntity extends AnimalEntity {
         super.notifyDataManagerChange(key);
     }
 
+    @Override
     protected void registerData() {
         super.registerData();
         dataManager.register(SADDLED, false);
         dataManager.register(BOOST_TIME, 0);
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putBoolean("Saddle", getSaddled());
     }
 
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         setSaddled(compound.getBoolean("Saddle"));
     }
 
+    @Override
     @Nullable
     public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
         spawnData = super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
@@ -118,22 +127,27 @@ public class SkeletonPigEntity extends AnimalEntity {
         return spawnData;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SKELETON_PIG_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
         return SoundEvents.SKELETON_PIG_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.SKELETON_PIG_DEATH;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.15F, 1);
     }
 
+    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         if (!super.processInteract(player, hand)) {
             ItemStack itemstack = player.getHeldItem(hand);
@@ -161,6 +175,7 @@ public class SkeletonPigEntity extends AnimalEntity {
         return true;
     }
 
+    @Override
     protected void dropInventory() {
         super.dropInventory();
         if (getSaddled()) {
@@ -181,6 +196,7 @@ public class SkeletonPigEntity extends AnimalEntity {
 
     }
 
+    @Override
     public void travel(Vec3d p_213352_1_) {
         if (this.isAlive()) {
             Entity entity = getPassengers().isEmpty() ? null : getPassengers().get(0);
@@ -239,10 +255,12 @@ public class SkeletonPigEntity extends AnimalEntity {
         }
     }
 
+    @Override
     public SkeletonPigEntity createChild(AgeableEntity ageable) {
         return Entities.SKELETON_PIG.create(world);
     }
 
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return stack.getItem() == Items.PORKCHOP;
     }

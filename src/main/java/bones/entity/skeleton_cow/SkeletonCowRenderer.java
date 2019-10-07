@@ -18,6 +18,7 @@ public class SkeletonCowRenderer extends MobRenderer<SkeletonCowEntity, Skeleton
         super(renderer, new SkeletonCowModel(), 0.7F);
     }
 
+    @Override
     protected ResourceLocation getEntityTexture(SkeletonCowEntity entity) {
         return COW_TEXTURES;
     }

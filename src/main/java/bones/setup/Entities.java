@@ -1,16 +1,22 @@
 package bones.setup;
 
 import bones.entity.skeleton_cow.SkeletonCowEntity;
+import bones.entity.skeleton_cow.SkeletonCowRenderer;
 import bones.entity.skeleton_pig.SkeletonPigEntity;
+import bones.entity.skeleton_pig.SkeletonPigRenderer;
 import bones.entity.skeleton_sheep.SkeletonSheepEntity;
+import bones.entity.skeleton_sheep.SkeletonSheepRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -69,5 +75,12 @@ public class Entities {
             biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_PIG, 1, 1, 3));
             biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_COW, 1, 1, 3));
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    public static void registerRenderingHandlers() {
+        RenderingRegistry.registerEntityRenderingHandler(SkeletonSheepEntity.class, SkeletonSheepRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SkeletonPigEntity.class, SkeletonPigRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SkeletonCowEntity.class, SkeletonCowRenderer::new);
     }
 }

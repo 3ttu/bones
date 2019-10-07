@@ -19,6 +19,7 @@ public class SkeletonPigRenderer extends MobRenderer<SkeletonPigEntity, Skeleton
         this.addLayer(new SkeletonPigSaddleLayer(this));
     }
 
+    @Override
     protected ResourceLocation getEntityTexture(SkeletonPigEntity entity) {
         return PIG_TEXTURES;
     }

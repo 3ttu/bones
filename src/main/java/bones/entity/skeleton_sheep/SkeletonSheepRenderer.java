@@ -20,6 +20,7 @@ public class SkeletonSheepRenderer extends MobRenderer<SkeletonSheepEntity, Skel
         addLayer(new SkeletonSheepFleshLayer(this));
     }
 
+    @Override
     protected ResourceLocation getEntityTexture(SkeletonSheepEntity entity) {
         return TEXTURES;
     }

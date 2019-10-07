@@ -20,6 +20,7 @@ public class SkeletonSheepFleshLayer extends LayerRenderer<SkeletonSheepEntity, 
         super(renderer);
     }
 
+    @Override
     public void render(SkeletonSheepEntity entity, float f1, float f2, float f3, float f4, float f5, float f6, float f7) {
         if (!entity.isSheared() && !entity.isInvisible()) {
             bindTexture(TEXTURE);
@@ -29,6 +30,7 @@ public class SkeletonSheepFleshLayer extends LayerRenderer<SkeletonSheepEntity, 
         }
     }
 
+    @Override
     public boolean shouldCombineTextures() {
         return true;
     }

@@ -18,6 +18,7 @@ public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, Ske
         super(renderer);
     }
 
+    @Override
     public void render(SkeletonPigEntity entityIn, float f1, float f2, float f3, float f4, float f5, float f6, float f7) {
         if (entityIn.getSaddled()) {
             bindTexture(TEXTURE);
@@ -26,6 +27,7 @@ public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, Ske
         }
     }
 
+    @Override
     public boolean shouldCombineTextures() {
         return false;
     }

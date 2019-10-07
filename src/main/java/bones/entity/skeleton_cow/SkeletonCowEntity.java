@@ -24,6 +24,7 @@ public class SkeletonCowEntity extends AnimalEntity {
         super(type, world);
     }
 
+    @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 2));
@@ -35,33 +36,40 @@ public class SkeletonCowEntity extends AnimalEntity {
         goalSelector.addGoal(7, new LookRandomlyGoal(this));
     }
 
+    @Override
     protected void registerAttributes() {
         super.registerAttributes();
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return SoundEvents.SKELETON_COW_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return SoundEvents.SKELETON_COW_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.SKELETON_COW_DEATH;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.15F, 1);
     }
 
+    @Override
     protected float getSoundVolume() {
         return 0.4F;
     }
 
     /*
+    @Override
     public boolean processInteract(PlayerEntity player, Hand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
         if (itemstack.getItem() == Items.BUCKET && !player.abilities.isCreativeMode && !isChild()) {
@@ -85,10 +93,12 @@ public class SkeletonCowEntity extends AnimalEntity {
         return stack.getItem() == Items.BEEF;
     }
 
+    @Override
     public SkeletonCowEntity createChild(AgeableEntity ageable) {
         return Entities.SKELETON_COW.create(world);
     }
 
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return isChild() ? sizeIn.height * 0.95F : 1.3F;
     }
