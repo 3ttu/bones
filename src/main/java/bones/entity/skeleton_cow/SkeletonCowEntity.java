@@ -7,6 +7,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
@@ -78,6 +79,11 @@ public class SkeletonCowEntity extends AnimalEntity {
         }
     }
     */
+
+    @Override
+    public boolean isBreedingItem(ItemStack stack) {
+        return stack.getItem() == Items.BEEF;
+    }
 
     public SkeletonCowEntity createChild(AgeableEntity ageable) {
         return Entities.SKELETON_COW.create(world);
