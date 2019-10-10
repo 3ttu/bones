@@ -3,10 +3,11 @@
     "1.14.4-1.0.0": "initial release",
     "1.14.4-1.1.0": "added skeleton pigs\nvarious fixes",
     "1.14.4-1.2.0": "added skeleton cows\nfixed loottables for skeleton pig and unsheared skeleton sheep",
-    "1.14.4-1.2.1": "fixed skeleton cow breeding item\nfixed update.json location"
+    "1.14.4-1.2.1": "fixed skeleton cow breeding item\nfixed update.json location",
+    "1.14.4-1.3.0": "added skeleton chickens\nfixed spawn eggs not working with dispensers"
   },
   "promos": {
-    "1.14.4-latest": "1.14.4-1.2.1",
-    "1.14.4-recommended": "1.14.4-1.2.1"
+    "1.14.4-latest": "1.14.4-1.3.0",
+    "1.14.4-recommended": "1.14.4-1.3.0"
   }
 }
