@@ -21,6 +21,10 @@ public class SoundEvents {
     public static final SoundEvent SKELETON_COW_DEATH = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_cow.death")).setRegistryName(MODID, "entity.skeleton_cow.death");
     public static final SoundEvent SKELETON_COW_HURT = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_cow.hurt")).setRegistryName(MODID, "entity.skeleton_cow.hurt");
 
+    public static final SoundEvent SKELETON_CHICKEN_AMBIENT = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_chicken.ambient")).setRegistryName(MODID, "entity.skeleton_chicken.ambient");
+    public static final SoundEvent SKELETON_CHICKEN_DEATH = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_chicken.death")).setRegistryName(MODID, "entity.skeleton_chicken.death");
+    public static final SoundEvent SKELETON_CHICKEN_HURT = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_chicken.hurt")).setRegistryName(MODID, "entity.skeleton_chicken.hurt");
+
     public static void register(RegistryEvent.Register<SoundEvent> event) {
         event.getRegistry().registerAll(
                 SKELETON_SHEEP_AMBIENT,
@@ -32,7 +36,10 @@ public class SoundEvents {
                 SKELETON_PIG_HURT,
                 SKELETON_COW_AMBIENT,
                 SKELETON_COW_DEATH,
-                SKELETON_COW_HURT
+                SKELETON_COW_HURT,
+                SKELETON_CHICKEN_AMBIENT,
+                SKELETON_CHICKEN_DEATH,
+                SKELETON_CHICKEN_HURT
         );
     }
 }

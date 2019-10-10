@@ -74,5 +74,27 @@
       "bones:skeleton_cow/hurt3"
     ],
     "subtitle": "bones.subtitle.skeleton_cow.hurt"
+  },
+  "entity.skeleton_chicken.ambient": {
+    "sounds": [
+      "bones:skeleton_chicken/say1",
+      "bones:skeleton_chicken/say2",
+      "bones:skeleton_chicken/say3"
+    ],
+    "subtitle": "bones.subtitle.skeleton_chicken.ambient"
+  },
+  "entity.skeleton_chicken.death": {
+    "sounds": [
+      "bones:skeleton_chicken/hurt1",
+      "bones:skeleton_chicken/hurt2"
+    ],
+    "subtitle": "bones.subtitle.skeleton_chicken.death"
+  },
+  "entity.skeleton_chicken.hurt": {
+    "sounds": [
+      "bones:skeleton_chicken/hurt1",
+      "bones:skeleton_chicken/hurt2"
+    ],
+    "subtitle": "bones.subtitle.skeleton_chicken.hurt"
   }
 }

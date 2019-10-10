@@ -24,7 +24,9 @@ public class Items {
                 new SpawnEggItem(Entities.SKELETON_PIG, 0xffffff, 15771042, eggProperties)
                         .setRegistryName(new ResourceLocation(MODID, "skeleton_pig_spawn_egg")),
                 new SpawnEggItem(Entities.SKELETON_COW, 0xffffff, 4470310, eggProperties)
-                        .setRegistryName(new ResourceLocation(MODID, "skeleton_cow_spawn_egg"))
+                        .setRegistryName(new ResourceLocation(MODID, "skeleton_cow_spawn_egg")),
+                new SpawnEggItem(Entities.SKELETON_CHICKEN, 0xffffff, 16711680, eggProperties)
+                        .setRegistryName(new ResourceLocation(MODID, "skeleton_chicken_spawn_egg"))
         );
     }
 }
