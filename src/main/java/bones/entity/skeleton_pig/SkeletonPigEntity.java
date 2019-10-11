@@ -1,12 +1,12 @@
 package bones.entity.skeleton_pig;
 
+import bones.entity.UndeadAnimalEntity;
 import bones.setup.Entities;
 import bones.setup.SoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.monster.ZombiePigmanEntity;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -31,7 +31,7 @@ import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class SkeletonPigEntity extends AnimalEntity {
+public class SkeletonPigEntity extends UndeadAnimalEntity {
     private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.VARINT);
     private boolean boosting;

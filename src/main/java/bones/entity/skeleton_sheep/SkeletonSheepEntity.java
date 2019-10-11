@@ -1,13 +1,13 @@
 package bones.entity.skeleton_sheep;
 
 import bones.Bones;
+import bones.entity.UndeadAnimalEntity;
 import bones.setup.Entities;
 import bones.setup.SoundEvents;
 import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -34,7 +34,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @SuppressWarnings("deprecation")
-public class SkeletonSheepEntity extends AnimalEntity implements net.minecraftforge.common.IShearable {
+public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minecraftforge.common.IShearable {
 
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SkeletonSheepEntity.class, DataSerializers.BOOLEAN);
 

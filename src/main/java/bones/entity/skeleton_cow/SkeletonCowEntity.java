@@ -1,11 +1,11 @@
 package bones.entity.skeleton_cow;
 
+import bones.entity.UndeadAnimalEntity;
 import bones.setup.Entities;
 import bones.setup.SoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class SkeletonCowEntity extends AnimalEntity {
+public class SkeletonCowEntity extends UndeadAnimalEntity {
 
     public SkeletonCowEntity(EntityType<? extends SkeletonCowEntity> type, World world) {
         super(type, world);

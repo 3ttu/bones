@@ -1,11 +1,11 @@
 package bones.entity.skeleton_chicken;
 
 import bones.Bones;
+import bones.entity.UndeadAnimalEntity;
 import bones.setup.Entities;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -28,7 +28,7 @@ import net.minecraft.world.storage.loot.LootTable;
 import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
-public class SkeletonChickenEntity extends AnimalEntity {
+public class SkeletonChickenEntity extends UndeadAnimalEntity {
 
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.CHICKEN);
     public float wingRotation;
