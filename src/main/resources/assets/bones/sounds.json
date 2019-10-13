@@ -34,13 +34,17 @@
     "sounds": [
       "bones:skeleton_pig/say1",
       "bones:skeleton_pig/say2",
-      "bones:skeleton_pig/say3"
+      "bones:skeleton_pig/say3",
+      "bones:skeleton_pig/say4",
+      "bones:skeleton_pig/say5",
+      "bones:skeleton_pig/say6"
     ],
     "subtitle": "bones.subtitle.skeleton_pig.ambient"
   },
   "entity.skeleton_pig.death": {
     "sounds": [
-      "bones:skeleton_pig/death"
+      "bones:skeleton_pig/death1",
+      "bones:skeleton_pig/death2"
     ],
     "subtitle": "bones.subtitle.skeleton_pig.death"
   },
@@ -48,7 +52,10 @@
     "sounds": [
       "bones:skeleton_pig/say1",
       "bones:skeleton_pig/say2",
-      "bones:skeleton_pig/say3"
+      "bones:skeleton_pig/say3",
+      "bones:skeleton_pig/say4",
+      "bones:skeleton_pig/say5",
+      "bones:skeleton_pig/say6"
     ],
     "subtitle": "bones.subtitle.skeleton_pig.hurt"
   },
