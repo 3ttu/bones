@@ -9,7 +9,7 @@ authors="ochotonida"
 
 [[mods]]
 modId="bones"
-version="1.14.4-1.3.1"
+version="1.14.4-1.3.2"
 displayName="Bones"
 updateJSONURL="https://raw.githubusercontent.com/ochotonida/bones/master/update.json"
 description='''Adds new skeletal mobs'''
