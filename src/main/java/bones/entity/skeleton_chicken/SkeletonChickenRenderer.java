@@ -17,13 +17,15 @@ public class SkeletonChickenRenderer extends MobRenderer<SkeletonChickenEntity, 
         super(renderManager, new SkeletonChickenModel(), 0.3F);
     }
 
-    protected ResourceLocation getEntityTexture(SkeletonChickenEntity entity) {
+    @Override
+    public ResourceLocation getEntityTexture(SkeletonChickenEntity entity) {
         return CHICKEN_TEXTURES;
     }
 
+    @Override
     protected float handleRotationFloat(SkeletonChickenEntity livingBase, float partialTicks) {
-        float f = MathHelper.lerp(partialTicks, livingBase.oFlap, livingBase.wingRotation);
-        float f1 = MathHelper.lerp(partialTicks, livingBase.oFlapSpeed, livingBase.destPos);
+        float f = MathHelper.lerp(partialTicks, livingBase.flap, livingBase.wingRotation);
+        float f1 = MathHelper.lerp(partialTicks, livingBase.flapSpeed, livingBase.destinationPos);
         return (MathHelper.sin(f) + 1) * f1;
     }
 }

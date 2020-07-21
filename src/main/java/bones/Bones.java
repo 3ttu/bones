@@ -3,19 +3,15 @@ package bones;
 import bones.setup.Entities;
 import bones.setup.Items;
 import bones.setup.SoundEvents;
-import bones.setup.proxy.ClientProxy;
-import bones.setup.proxy.IProxy;
-import bones.setup.proxy.ServerProxy;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DeferredWorkQueue;
-import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
-import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import static bones.Bones.MODID;
 
@@ -26,12 +22,15 @@ public class Bones {
 
     public static final String MODID = "bones";
 
-    public Bones() {
-        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+    @SubscribeEvent
+    public static void setupCommon(FMLCommonSetupEvent event) {
+        DeferredWorkQueue.runLater(Entities::addSpawns);
     }
 
-    @SuppressWarnings("Convert2MethodRef")
-    public static IProxy proxy = DistExecutor.runForDist(() -> () -> new ClientProxy(), () -> () -> new ServerProxy());
+    @SubscribeEvent
+    public static void setupClient(FMLClientSetupEvent event) {
+        Entities.registerRenderingHandlers();
+    }
 
     @SubscribeEvent
     public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
@@ -46,10 +45,5 @@ public class Bones {
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
         Items.register(event);
-    }
-
-    public void setup(FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(Entities::addSpawns);
-        proxy.init();
     }
 }

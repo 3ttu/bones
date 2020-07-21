@@ -10,28 +10,30 @@ buildscript {
 }
 apply plugin: 'net.minecraftforge.gradle'
 
-version = '1.14.4-1.3.2'
+version = '1.15.2-1.3.2'
 group = 'bones'
 archivesBaseName = 'Bones'
 
-sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20190903-1.14.3'
+    mappings channel: 'snapshot', version: '20200514-1.15.1'
 
     runs {
         client = {
-            // recommended logging data for a userdev environment
-            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
-            // recommended logging level for the console
+            properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
         }
         server = {
-            // recommended logging data for a userdev environment
-            properties 'forge.logging.markers': 'SCAN,REGISTRIES,REGISTRYDUMP'
-            // recommended logging level for the console
+            properties 'forge.logging.markers': ''
+            properties 'forge.logging.console.level': 'debug'
+            workingDirectory project.file('run').canonicalPath
+            source sourceSets.main
+        }
+        data = {
+            properties 'forge.logging.markers': ''
             properties 'forge.logging.console.level': 'debug'
             workingDirectory project.file('run').canonicalPath
             source sourceSets.main
@@ -39,12 +41,8 @@ minecraft {
     }
 }
 
-repositories {
-
-}
-
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.14.4-28.1.114'
+    minecraft 'net.minecraftforge:forge:1.15.2-31.2.28'
 }
 
 jar {

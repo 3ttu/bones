@@ -1,6 +1,8 @@
 package bones.entity.skeleton_sheep;
 
 import bones.Bones;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.util.ResourceLocation;
@@ -21,17 +23,10 @@ public class SkeletonSheepFleshLayer extends LayerRenderer<SkeletonSheepEntity, 
     }
 
     @Override
-    public void render(SkeletonSheepEntity entity, float f1, float f2, float f3, float f4, float f5, float f6, float f7) {
-        if (!entity.isSheared() && !entity.isInvisible()) {
-            bindTexture(TEXTURE);
-            getEntityModel().setModelAttributes(skeletonSheepFleshModel);
-            skeletonSheepFleshModel.setLivingAnimations(entity, f1, f2, f3);
-            skeletonSheepFleshModel.render(entity, f1, f2, f4, f5, f6, f7);
-        }
-    }
 
-    @Override
-    public boolean shouldCombineTextures() {
-        return true;
+    public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int packedLightIn, SkeletonSheepEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (!entity.isSheared() && !entity.isInvisible()) {
+            renderCopyCutoutModel(this.getEntityModel(), this.skeletonSheepFleshModel, TEXTURE, matrixStack, buffer, packedLightIn, entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch, partialTicks, 1, 1, 1);
+        }
     }
 }

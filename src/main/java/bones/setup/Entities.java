@@ -10,8 +10,6 @@ import bones.entity.skeleton_sheep.SkeletonSheepEntity;
 import bones.entity.skeleton_sheep.SkeletonSheepRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IWorld;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,27 +18,23 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Random;
-
 import static bones.Bones.MODID;
 
 public class Entities {
 
-    public static final EntityType<SkeletonSheepEntity> SKELETON_SHEEP = EntityType.Builder.create(SkeletonSheepEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<SkeletonSheepEntity> SKELETON_SHEEP = EntityType.Builder.create(SkeletonSheepEntity::new, EntityClassification.MONSTER)
             .size(0.9F, 1.3F)
             .immuneToFire()
             .build("skeleton_sheep");
-    public static final EntityType<SkeletonPigEntity> SKELETON_PIG = EntityType.Builder.create(SkeletonPigEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<SkeletonPigEntity> SKELETON_PIG = EntityType.Builder.create(SkeletonPigEntity::new, EntityClassification.MONSTER)
             .size(0.9F, 0.9F)
             .immuneToFire()
             .build("skeleton_pig");
-    public static final EntityType<SkeletonCowEntity> SKELETON_COW = EntityType.Builder.create(SkeletonCowEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<SkeletonCowEntity> SKELETON_COW = EntityType.Builder.create(SkeletonCowEntity::new, EntityClassification.MONSTER)
             .size(0.9F, 1.4F)
             .immuneToFire()
             .build("skeleton_cow");
-    public static final EntityType<SkeletonChickenEntity> SKELETON_CHICKEN = EntityType.Builder.create(SkeletonChickenEntity::new, EntityClassification.CREATURE)
+    public static final EntityType<SkeletonChickenEntity> SKELETON_CHICKEN = EntityType.Builder.create(SkeletonChickenEntity::new, EntityClassification.MONSTER)
             .size(0.4F, 0.7F)
             .immuneToFire()
             .build("skeleton_chicken");
@@ -57,42 +51,26 @@ public class Entities {
                 SKELETON_COW,
                 SKELETON_CHICKEN
         );
-
-        EntitySpawnPlacementRegistry.register(SKELETON_SHEEP, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
-        EntitySpawnPlacementRegistry.register(SKELETON_PIG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
-        EntitySpawnPlacementRegistry.register(SKELETON_COW, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
-        EntitySpawnPlacementRegistry.register(SKELETON_CHICKEN, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, Entities::mobCondition);
-    }
-
-    private static boolean mobCondition(EntityType<? extends MobEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos pos, Random random) {
-        BlockPos blockpos = pos.down();
-        return spawnReason == SpawnReason.SPAWNER || world.getBlockState(blockpos).canEntitySpawn(world, blockpos, entityType);
+        EntitySpawnPlacementRegistry.register(SKELETON_SHEEP, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (animal, world, reason, pos, random) -> true);
+        EntitySpawnPlacementRegistry.register(SKELETON_PIG, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (animal, world, reason, pos, random) -> true);
+        EntitySpawnPlacementRegistry.register(SKELETON_COW, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (animal, world, reason, pos, random) -> true);
+        EntitySpawnPlacementRegistry.register(SKELETON_CHICKEN, EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, (animal, world, reason, pos, random) -> {System.out.println(pos); return true;});
     }
 
     public static void addSpawns() {
-        Collection<Biome> netherBiomes = BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER);
-        Collection<Biome> spookyBiomes = new HashSet<>(BiomeDictionary.getBiomes(BiomeDictionary.Type.SPOOKY));
-        spookyBiomes.removeAll(netherBiomes);
-
-        for (Biome biome : netherBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 24, 3, 7));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_PIG, 24, 2, 5));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_COW, 24, 2, 8));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_CHICKEN, 24, 2, 5));
-        }
-        for (Biome biome : spookyBiomes) {
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 1, 1, 3));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_PIG, 1, 1, 3));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_COW, 1, 1, 3));
-            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_CHICKEN, 1, 1, 3));
+        for (Biome biome : BiomeDictionary.getBiomes(BiomeDictionary.Type.NETHER)) {
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_SHEEP, 70, 1, 6));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_PIG, 70, 1, 6));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_COW, 70, 1, 6));
+            biome.getSpawns(EntityClassification.CREATURE).add(new Biome.SpawnListEntry(SKELETON_CHICKEN, 70, 1, 6));
         }
     }
 
     @OnlyIn(Dist.CLIENT)
     public static void registerRenderingHandlers() {
-        RenderingRegistry.registerEntityRenderingHandler(SkeletonSheepEntity.class, SkeletonSheepRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SkeletonPigEntity.class, SkeletonPigRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SkeletonCowEntity.class, SkeletonCowRenderer::new);
-        RenderingRegistry.registerEntityRenderingHandler(SkeletonChickenEntity.class, SkeletonChickenRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SKELETON_SHEEP, SkeletonSheepRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SKELETON_PIG, SkeletonPigRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SKELETON_COW, SkeletonCowRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(SKELETON_CHICKEN, SkeletonChickenRenderer::new);
     }
 }

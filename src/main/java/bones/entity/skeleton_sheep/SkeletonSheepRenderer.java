@@ -21,7 +21,7 @@ public class SkeletonSheepRenderer extends MobRenderer<SkeletonSheepEntity, Skel
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(SkeletonSheepEntity entity) {
+    public ResourceLocation getEntityTexture(SkeletonSheepEntity entity) {
         return TEXTURES;
     }
 }

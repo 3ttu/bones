@@ -33,12 +33,11 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
-@SuppressWarnings("deprecation")
 public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minecraftforge.common.IShearable {
 
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SkeletonSheepEntity.class, DataSerializers.BOOLEAN);
 
-    private static final ResourceLocation LOOTTABLE_UNSHEARED = new ResourceLocation(Bones.MODID, "entities/skeleton_sheep_unsheared");
+    private static final ResourceLocation LOOT_TABLE_UNSHEARED = new ResourceLocation(Bones.MODID, "entities/skeleton_sheep_unsheared");
 
     public SkeletonSheepEntity(EntityType<? extends SkeletonSheepEntity> type, World worldIn) {
         super(type, worldIn);
@@ -59,8 +58,8 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
     @Override
     protected void registerAttributes() {
         super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8.0D);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue((double)0.23F);
+        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8);
+        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
     }
 
     @Override
@@ -84,7 +83,7 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
     @Override
     protected ResourceLocation getLootTable() {
         if (!isSheared()) {
-            return LOOTTABLE_UNSHEARED;
+            return LOOT_TABLE_UNSHEARED;
         }
         return super.getLootTable();
     }
@@ -144,7 +143,7 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
                     }
                 } else {
                     for (int i = 4 + rand.nextInt(4); i > 0; i--) {
-                        world.addParticle(ParticleTypes.HAPPY_VILLAGER, posX + rand.nextFloat() * getWidth() * 2 - getWidth(), posY + 0.5 + rand.nextFloat() * getHeight(), posZ + rand.nextFloat() * getWidth() * 2 - getWidth(), 0, 0, 0);
+                        world.addParticle(ParticleTypes.HAPPY_VILLAGER, getPosX() + rand.nextFloat() * getWidth() * 2 - getWidth(), getPosY() + 0.5 + rand.nextFloat() * getHeight(), getPosZ() + rand.nextFloat() * getWidth() * 2 - getWidth(), 0, 0, 0);
                     }
                 }
                 return true;

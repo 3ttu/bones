@@ -20,7 +20,7 @@ public class SkeletonPigRenderer extends MobRenderer<SkeletonPigEntity, Skeleton
     }
 
     @Override
-    protected ResourceLocation getEntityTexture(SkeletonPigEntity entity) {
+    public ResourceLocation getEntityTexture(SkeletonPigEntity entity) {
         return PIG_TEXTURES;
     }
 }

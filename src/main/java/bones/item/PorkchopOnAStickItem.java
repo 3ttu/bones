@@ -1,7 +1,6 @@
 package bones.item;
 
 import bones.entity.skeleton_pig.SkeletonPigEntity;
-import mcp.MethodsReturnNonnullByDefault;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -12,10 +11,6 @@ import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
 public class PorkchopOnAStickItem extends Item {
 
     public PorkchopOnAStickItem(Item.Properties properties) {
@@ -25,9 +20,7 @@ public class PorkchopOnAStickItem extends Item {
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity player, Hand hand) {
         ItemStack stack = player.getHeldItem(hand);
-        if (worldIn.isRemote) {
-            return new ActionResult<>(ActionResultType.PASS, stack);
-        } else {
+        if (!worldIn.isRemote) {
             if (player.isPassenger() && player.getRidingEntity() instanceof SkeletonPigEntity) {
                 SkeletonPigEntity entity = (SkeletonPigEntity) player.getRidingEntity();
                 if (stack.getMaxDamage() - stack.getDamage() >= 1 && entity.boost()) {
@@ -41,9 +34,8 @@ public class PorkchopOnAStickItem extends Item {
                     return new ActionResult<>(ActionResultType.SUCCESS, stack);
                 }
             }
-
             player.addStat(Stats.ITEM_USED.get(this));
-            return new ActionResult<>(ActionResultType.PASS, stack);
         }
+        return new ActionResult<>(ActionResultType.PASS, stack);
     }
 }

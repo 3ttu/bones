@@ -68,33 +68,13 @@ public class SkeletonCowEntity extends UndeadAnimalEntity {
         return 0.4F;
     }
 
-    /*
-    @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
-        ItemStack itemstack = player.getHeldItem(hand);
-        if (itemstack.getItem() == Items.BUCKET && !player.abilities.isCreativeMode && !isChild()) {
-            player.playSound(SoundEvents.ENTITY_COW_MILK, 1, 1);
-            itemstack.shrink(1);
-            if (itemstack.isEmpty()) {
-                player.setHeldItem(hand, new ItemStack(Items.MILK_BUCKET));
-            } else if (!player.inventory.addItemStackToInventory(new ItemStack(Items.MILK_BUCKET))) {
-                player.dropItem(new ItemStack(Items.MILK_BUCKET), false);
-            }
-
-            return true;
-        } else {
-            return super.processInteract(player, hand);
-        }
-    }
-    */
-
     @Override
     public boolean isBreedingItem(ItemStack stack) {
         return stack.getItem() == Items.BEEF;
     }
 
     @Override
-    public SkeletonCowEntity createChild(AgeableEntity ageable) {
+    public SkeletonCowEntity createChild(AgeableEntity entity) {
         return Entities.SKELETON_COW.create(world);
     }
 

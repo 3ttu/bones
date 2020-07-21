@@ -1,7 +1,12 @@
 package bones.entity.skeleton_pig;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -11,6 +16,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 @OnlyIn(Dist.CLIENT)
 @ParametersAreNonnullByDefault
 public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, SkeletonPigModel> {
+
     private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/pig/pig_saddle.png");
     private final SkeletonPigModel pigModel = new SkeletonPigModel(0.5F);
 
@@ -18,17 +24,13 @@ public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, Ske
         super(renderer);
     }
 
-    @Override
-    public void render(SkeletonPigEntity entityIn, float f1, float f2, float f3, float f4, float f5, float f6, float f7) {
-        if (entityIn.getSaddled()) {
-            bindTexture(TEXTURE);
-            getEntityModel().setModelAttributes(pigModel);
-            pigModel.render(entityIn, f1, f2, f4, f5, f6, f7);
+    public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, SkeletonPigEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (entity.getSaddled()) {
+            getEntityModel().copyModelAttributesTo(this.pigModel);
+            pigModel.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
+            pigModel.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            IVertexBuilder ivertexbuilder = buffer.getBuffer(RenderType.getEntityCutoutNoCull(TEXTURE));
+            pigModel.render(matrixStack, ivertexbuilder, light, OverlayTexture.NO_OVERLAY, 1, 1, 1, 1);
         }
-    }
-
-    @Override
-    public boolean shouldCombineTextures() {
-        return false;
     }
 }

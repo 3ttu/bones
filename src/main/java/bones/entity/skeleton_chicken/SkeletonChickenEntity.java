@@ -32,10 +32,10 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
 
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.CHICKEN);
     public float wingRotation;
-    public float destPos;
-    public float oFlapSpeed;
-    public float oFlap;
-    public float wingRotDelta = 1;
+    public float destinationPos;
+    public float flapSpeed;
+    public float flap;
+    public float wingRotationDelta = 1;
     public int timeUntilNextEgg = rand.nextInt(6000) + 6000;
 
     public SkeletonChickenEntity(EntityType<? extends SkeletonChickenEntity> type, World worldIn) {
@@ -43,6 +43,7 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
         setPathPriority(PathNodeType.WATER, 0);
     }
 
+    @Override
     protected void registerGoals() {
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 1.4));
@@ -54,33 +55,36 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
         goalSelector.addGoal(7, new LookRandomlyGoal(this));
     }
 
+    @Override
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return isChild() ? sizeIn.height * 0.85F : sizeIn.height * 0.92F;
     }
 
+    @Override
     protected void registerAttributes() {
         super.registerAttributes();
         getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(4.0D);
         getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
     }
 
+    @Override
     public void livingTick() {
         super.livingTick();
-        oFlap = wingRotation;
-        oFlapSpeed = destPos;
-        destPos = destPos + (onGround ? -1 : 4) * 0.3F;
-        destPos = MathHelper.clamp(destPos, 0, 1);
-        if (!onGround && wingRotDelta < 1) {
-            wingRotDelta = 1;
+        flap = wingRotation;
+        flapSpeed = destinationPos;
+        destinationPos = destinationPos + (onGround ? -1 : 4) * 0.3F;
+        destinationPos = MathHelper.clamp(destinationPos, 0, 1);
+        if (!onGround && wingRotationDelta < 1) {
+            wingRotationDelta = 1;
         }
 
-        wingRotDelta = wingRotDelta * 0.9F;
+        wingRotationDelta = wingRotationDelta * 0.9F;
         Vec3d vec3d = getMotion();
         if (!onGround && vec3d.y < 0) {
             setMotion(vec3d.mul(1, 0.8, 1));
         }
 
-        wingRotation += wingRotDelta * 2;
+        wingRotation += wingRotationDelta * 2;
         if (!world.isRemote && isAlive() && !isChild() && --timeUntilNextEgg <= 0) {
             playSound(SoundEvents.ENTITY_CHICKEN_EGG, 1, (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1);
             // noinspection ConstantConditions
@@ -94,34 +98,43 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
 
     }
 
-    public void fall(float distance, float damageMultiplier) {
+    @Override
+    public boolean onLivingFall(float distance, float damageMultiplier) {
+        return false;
     }
 
+    @Override
     protected SoundEvent getAmbientSound() {
         return bones.setup.SoundEvents.SKELETON_CHICKEN_AMBIENT;
     }
 
+    @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
         return bones.setup.SoundEvents.SKELETON_CHICKEN_HURT;
     }
 
+    @Override
     protected SoundEvent getDeathSound() {
         return bones.setup.SoundEvents.SKELETON_CHICKEN_DEATH;
     }
 
+    @Override
     protected void playStepSound(BlockPos pos, BlockState blockIn) {
         this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.08F, 1);
     }
 
 
+    @Override
     public SkeletonChickenEntity createChild(AgeableEntity ageable) {
         return Entities.SKELETON_CHICKEN.create(world);
     }
 
+    @Override
     public boolean isBreedingItem(ItemStack stack) {
         return TEMPTATION_ITEMS.test(stack);
     }
 
+    @Override
     public void readAdditional(CompoundNBT compound) {
         super.readAdditional(compound);
         if (compound.contains("EggLayTime")) {
@@ -129,16 +142,18 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
         }
     }
 
+    @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
         compound.putInt("EggLayTime", timeUntilNextEgg);
     }
 
+    @Override
     public void updatePassenger(Entity passenger) {
         super.updatePassenger(passenger);
         float f = MathHelper.sin(renderYawOffset * ((float) Math.PI / 180));
         float f1 = MathHelper.cos(renderYawOffset * ((float) Math.PI / 180));
-        passenger.setPosition(posX + 0.1 * f, posY + getHeight() * 0.5 + passenger.getYOffset(), posZ - 0.1F * f1);
+        passenger.setPosition(getPosX() + 0.1 * f, getPosY() + getHeight() * 0.5 + passenger.getYOffset(), getPosZ() - 0.1F * f1);
         if (passenger instanceof LivingEntity) {
             ((LivingEntity) passenger).renderYawOffset = renderYawOffset;
         }

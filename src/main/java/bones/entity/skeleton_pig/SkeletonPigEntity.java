@@ -32,6 +32,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 
 @ParametersAreNonnullByDefault
 public class SkeletonPigEntity extends UndeadAnimalEntity {
+
     private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.VARINT);
     private boolean boosting;
@@ -117,7 +118,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
             ZombiePigmanEntity pigman = EntityType.ZOMBIE_PIGMAN.create(this.world);
             if (pigman != null) {
                 setSaddled(true);
-                pigman.setLocationAndAngles(posX, posY, posZ, rotationYaw, 0);
+                pigman.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, 0);
                 pigman.onInitialSpawn(world, difficulty, reason, null, null);
                 world.addEntity(pigman);
                 pigman.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(bones.setup.Items.PORKCHOP_ON_A_STICK));
@@ -164,7 +165,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
                 itemstack.interactWithEntity(player, this, hand);
                 if (isAlive() && !getSaddled() && !isChild()) {
                     setSaddled(true);
-                    world.playSound(player, posX, posY, posZ, net.minecraft.util.SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.NEUTRAL, 0.5F, 1);
+                    world.playSound(player, getPosX(), getPosY(), getPosZ(), net.minecraft.util.SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.NEUTRAL, 0.5F, 1);
                     itemstack.shrink(1);
                 }
                 return true;
@@ -188,12 +189,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     }
 
     public void setSaddled(boolean saddled) {
-        if (saddled) {
-            dataManager.set(SADDLED, true);
-        } else {
-            dataManager.set(SADDLED, false);
-        }
-
+        dataManager.set(SADDLED, saddled);
     }
 
     @Override
@@ -226,8 +222,8 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
                 }
 
                 prevLimbSwingAmount = limbSwingAmount;
-                double motionX = posX - prevPosX;
-                double motionZ = posZ - prevPosZ;
+                double motionX = getPosX() - prevPosX;
+                double motionZ = getPosZ() - prevPosZ;
                 float f1 = MathHelper.sqrt(motionX * motionX + motionZ * motionZ) * 4;
                 if (f1 > 1) {
                     f1 = 1;
@@ -256,7 +252,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    public SkeletonPigEntity createChild(AgeableEntity ageable) {
+    public SkeletonPigEntity createChild(AgeableEntity entity) {
         return Entities.SKELETON_PIG.create(world);
     }
 
