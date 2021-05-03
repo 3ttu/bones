@@ -1,10 +1,11 @@
-package bones.entity.skeleton_cow;
+package bones.common.entity;
 
-import bones.entity.UndeadAnimalEntity;
-import bones.setup.Entities;
-import bones.setup.SoundEvents;
+import bones.common.init.ModEntities;
+import bones.common.init.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -12,12 +13,11 @@ import net.minecraft.item.Items;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public class SkeletonCowEntity extends UndeadAnimalEntity {
 
     public SkeletonCowEntity(EntityType<? extends SkeletonCowEntity> type, World world) {
@@ -36,31 +36,30 @@ public class SkeletonCowEntity extends UndeadAnimalEntity {
         goalSelector.addGoal(7, new LookRandomlyGoal(this));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(10);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.2);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 10)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.2);
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SKELETON_COW_AMBIENT;
+        return ModSoundEvents.SKELETON_COW_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.SKELETON_COW_HURT;
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSoundEvents.SKELETON_COW_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SKELETON_COW_DEATH;
+        return ModSoundEvents.SKELETON_COW_DEATH;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.15F, 1);
+    protected void playStepSound(BlockPos pos, BlockState block) {
+        this.playSound(SoundEvents.ENTITY_SKELETON_STEP, 0.15F, 1);
     }
 
     @Override
@@ -74,12 +73,12 @@ public class SkeletonCowEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    public SkeletonCowEntity createChild(AgeableEntity entity) {
-        return Entities.SKELETON_COW.create(world);
+    public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+        return ModEntities.SKELETON_COW.create(world);
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return isChild() ? sizeIn.height * 0.95F : 1.3F;
+    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+        return isChild() ? size.height * 0.95F : 1.3F;
     }
 }

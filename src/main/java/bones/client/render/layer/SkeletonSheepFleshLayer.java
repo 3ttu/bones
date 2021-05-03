@@ -1,6 +1,9 @@
-package bones.entity.skeleton_sheep;
+package bones.client.render.layer;
 
 import bones.Bones;
+import bones.client.render.model.SkeletonSheepFleshModel;
+import bones.client.render.model.SkeletonSheepModel;
+import bones.common.entity.SkeletonSheepEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -9,10 +12,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 @OnlyIn(Dist.CLIENT)
-@ParametersAreNonnullByDefault
 public class SkeletonSheepFleshLayer extends LayerRenderer<SkeletonSheepEntity, SkeletonSheepModel> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_sheep/skeleton_sheep_flesh.png");

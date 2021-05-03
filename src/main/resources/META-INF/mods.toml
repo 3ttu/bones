@@ -1,26 +1,29 @@
 modLoader="javafml"
-loaderVersion="[28,)"
-
-issueTrackerURL="https://github.com/ochotonida/bones/issues"
-displayURL="https://minecraft.curseforge.com/projects/bones"
-logoFile="logo.png"
-authors="ochotonida"
+loaderVersion="[34,)"
+license = "MIT"
+issueTrackerURL = "https://github.com/ochotonida/bones/issues"
 
 [[mods]]
 modId="bones"
-version="1.15.2-1.3.2"
+version="1.16.5-2.0.0"
 displayName="Bones"
-description='''Adds a bunch of new skeletal mobs'''
+displayURL="https://minecraft.curseforge.com/projects/bones"
+logoFile="logo.png"
+authors="ochotonida"
+description='''
+Adds a bunch of skeletal mobs
+'''
 
 [[dependencies.bones]]
     modId="forge"
     mandatory=true
-    versionRange="[31,)"
+    versionRange="[34,)"
     ordering="NONE"
     side="BOTH"
+
 [[dependencies.bones]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.15.2]"
+    versionRange="[1.16.3,1.17)"
     ordering="NONE"
     side="BOTH"

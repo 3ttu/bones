@@ -1,17 +1,15 @@
 package bones;
 
-import bones.setup.Entities;
-import bones.setup.Items;
-import bones.setup.SoundEvents;
+import bones.common.init.ModEntities;
+import bones.common.init.ModItems;
+import bones.common.init.ModSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
 import net.minecraft.util.SoundEvent;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.DeferredWorkQueue;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
-import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
 import static bones.Bones.MODID;
 
@@ -22,28 +20,13 @@ public class Bones {
 
     public static final String MODID = "bones";
 
-    @SubscribeEvent
-    public static void setupCommon(FMLCommonSetupEvent event) {
-        DeferredWorkQueue.runLater(Entities::addSpawns);
-    }
-
-    @SubscribeEvent
-    public static void setupClient(FMLClientSetupEvent event) {
-        Entities.registerRenderingHandlers();
-    }
-
-    @SubscribeEvent
-    public static void registerEntities(RegistryEvent.Register<EntityType<?>> event) {
-        Entities.register(event);
-    }
-
-    @SubscribeEvent
-    public static void registerSounds(RegistryEvent.Register<SoundEvent> event) {
-        SoundEvents.register(event);
-    }
-
-    @SubscribeEvent
-    public static void registerItems(RegistryEvent.Register<Item> event) {
-        Items.register(event);
+    public Bones() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+        modEventBus.addGenericListener(EntityType.class, ModEntities::register);
+        modEventBus.addGenericListener(Item.class, ModItems::register);
+        modEventBus.addGenericListener(SoundEvent.class, ModSoundEvents::register);
+        modEventBus.addListener(ModEntities::addEntityAttributes);
+        modEventBus.addListener(ModEntities::registerRenderingHandlers);
+        MinecraftForge.EVENT_BUS.addListener(ModEntities::addSpawns);
     }
 }

@@ -1,4 +1,4 @@
-package bones.setup;
+package bones.common.init;
 
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -6,7 +6,7 @@ import net.minecraftforge.event.RegistryEvent;
 
 import static bones.Bones.MODID;
 
-public class SoundEvents {
+public class ModSoundEvents {
 
     public static final SoundEvent SKELETON_SHEEP_AMBIENT = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_sheep.ambient")).setRegistryName(MODID, "entity.skeleton_sheep.ambient");
     public static final SoundEvent SKELETON_SHEEP_DEATH = new SoundEvent(new ResourceLocation(MODID, "entity.skeleton_sheep.death")).setRegistryName(MODID, "entity.skeleton_sheep.death");

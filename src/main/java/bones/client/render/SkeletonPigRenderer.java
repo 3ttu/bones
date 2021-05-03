@@ -1,16 +1,16 @@
-package bones.entity.skeleton_pig;
+package bones.client.render;
 
 import bones.Bones;
+import bones.client.render.model.SkeletonPigModel;
+import bones.common.entity.SkeletonPigEntity;
+import bones.client.render.layer.SkeletonPigSaddleLayer;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 @OnlyIn(Dist.CLIENT)
-@ParametersAreNonnullByDefault
 public class SkeletonPigRenderer extends MobRenderer<SkeletonPigEntity, SkeletonPigModel> {
     private static final ResourceLocation PIG_TEXTURES = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_pig.png");
 

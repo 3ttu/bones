@@ -1,6 +1,8 @@
-package bones.entity.skeleton_cow;
+package bones.client.render;
 
 import bones.Bones;
+import bones.client.render.model.SkeletonCowModel;
+import bones.common.entity.SkeletonCowEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;

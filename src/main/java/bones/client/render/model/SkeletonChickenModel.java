@@ -1,5 +1,6 @@
-package bones.entity.skeleton_chicken;
+package bones.client.render.model;
 
+import bones.common.entity.SkeletonChickenEntity;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.client.renderer.model.ModelRenderer;

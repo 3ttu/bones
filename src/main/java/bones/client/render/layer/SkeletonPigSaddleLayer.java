@@ -1,5 +1,7 @@
-package bones.entity.skeleton_pig;
+package bones.client.render.layer;
 
+import bones.client.render.model.SkeletonPigModel;
+import bones.common.entity.SkeletonPigEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
@@ -11,10 +13,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
 @OnlyIn(Dist.CLIENT)
-@ParametersAreNonnullByDefault
 public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, SkeletonPigModel> {
 
     private static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/pig/pig_saddle.png");
@@ -25,7 +24,7 @@ public class SkeletonPigSaddleLayer extends LayerRenderer<SkeletonPigEntity, Ske
     }
 
     public void render(MatrixStack matrixStack, IRenderTypeBuffer buffer, int light, SkeletonPigEntity entity, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getSaddled()) {
+        if (entity.isSaddled()) {
             getEntityModel().copyModelAttributesTo(this.pigModel);
             pigModel.setLivingAnimations(entity, limbSwing, limbSwingAmount, partialTicks);
             pigModel.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

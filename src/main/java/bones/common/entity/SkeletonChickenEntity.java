@@ -1,10 +1,12 @@
-package bones.entity.skeleton_chicken;
+package bones.common.entity;
 
 import bones.Bones;
-import bones.entity.UndeadAnimalEntity;
-import bones.setup.Entities;
+import bones.common.init.ModEntities;
+import bones.common.init.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -18,16 +20,13 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.loot.LootContext;
-import net.minecraft.world.storage.loot.LootParameterSets;
-import net.minecraft.world.storage.loot.LootTable;
+import net.minecraft.loot.LootContext;
+import net.minecraft.loot.LootParameterSets;
+import net.minecraft.loot.LootTable;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public class SkeletonChickenEntity extends UndeadAnimalEntity {
 
     private static final Ingredient TEMPTATION_ITEMS = Ingredient.fromItems(Items.CHICKEN);
@@ -38,8 +37,8 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
     public float wingRotationDelta = 1;
     public int timeUntilNextEgg = rand.nextInt(6000) + 6000;
 
-    public SkeletonChickenEntity(EntityType<? extends SkeletonChickenEntity> type, World worldIn) {
-        super(type, worldIn);
+    public SkeletonChickenEntity(EntityType<? extends SkeletonChickenEntity> type, World world) {
+        super(type, world);
         setPathPriority(PathNodeType.WATER, 0);
     }
 
@@ -56,15 +55,14 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return isChild() ? sizeIn.height * 0.85F : sizeIn.height * 0.92F;
+    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+        return isChild() ? size.height * 0.85F : size.height * 0.92F;
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(4.0D);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 4)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     @Override
@@ -79,7 +77,7 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
         }
 
         wingRotationDelta = wingRotationDelta * 0.9F;
-        Vec3d vec3d = getMotion();
+        Vector3d vec3d = getMotion();
         if (!onGround && vec3d.y < 0) {
             setMotion(vec3d.mul(1, 0.8, 1));
         }
@@ -105,28 +103,27 @@ public class SkeletonChickenEntity extends UndeadAnimalEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return bones.setup.SoundEvents.SKELETON_CHICKEN_AMBIENT;
+        return ModSoundEvents.SKELETON_CHICKEN_AMBIENT;
     }
 
     @Override
-    protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return bones.setup.SoundEvents.SKELETON_CHICKEN_HURT;
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSoundEvents.SKELETON_CHICKEN_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return bones.setup.SoundEvents.SKELETON_CHICKEN_DEATH;
+        return ModSoundEvents.SKELETON_CHICKEN_DEATH;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
-        this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.08F, 1);
+    protected void playStepSound(BlockPos pos, BlockState blockState) {
+        this.playSound(SoundEvents.ENTITY_SKELETON_STEP, 0.08F, 1);
     }
 
-
     @Override
-    public SkeletonChickenEntity createChild(AgeableEntity ageable) {
-        return Entities.SKELETON_CHICKEN.create(world);
+    public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+        return ModEntities.SKELETON_CHICKEN.create(world);
     }
 
     @Override

@@ -1,12 +1,12 @@
-package bones.entity.skeleton_sheep;
+package bones.common.entity;
 
 import bones.Bones;
-import bones.entity.UndeadAnimalEntity;
-import bones.setup.Entities;
-import bones.setup.SoundEvents;
-import mcp.MethodsReturnNonnullByDefault;
+import bones.common.init.ModEntities;
+import bones.common.init.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -17,23 +17,16 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
-import net.minecraft.world.IWorldReader;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
+import net.minecraft.world.server.ServerWorld;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.ArrayList;
+import java.util.List;
 
-@ParametersAreNonnullByDefault
-@MethodsReturnNonnullByDefault
-public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minecraftforge.common.IShearable {
+public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minecraftforge.common.IForgeShearable {
 
     private static final DataParameter<Boolean> IS_SHEARED = EntityDataManager.createKey(SkeletonSheepEntity.class, DataSerializers.BOOLEAN);
 
@@ -55,11 +48,10 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
         this.goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        this.getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(8);
-        this.getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.23);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 8)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     @Override
@@ -88,42 +80,40 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
         return super.getLootTable();
     }
 
-    @Nullable
     @Override
-    public ILivingEntityData onInitialSpawn(IWorld worldIn, DifficultyInstance difficultyIn, SpawnReason reason, @Nullable ILivingEntityData spawnDataIn, @Nullable CompoundNBT dataTag) {
+    public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
         if (rand.nextInt(4) == 0) {
             dataManager.set(IS_SHEARED, false);
         }
-        return super.onInitialSpawn(worldIn, difficultyIn, reason, spawnDataIn, dataTag);
+        return super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
     }
 
-    protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
-        return 0.95F * sizeIn.height;
-    }
-
-    @Nullable
-    @Override
-    public AgeableEntity createChild(AgeableEntity ageable) {
-        return Entities.SKELETON_SHEEP.create(ageable.world);
+    protected float getStandingEyeHeight(Pose pose, EntitySize size) {
+        return 0.95F * size.height;
     }
 
     @Override
-    public java.util.List<ItemStack> onSheared(ItemStack item, net.minecraft.world.IWorld world, BlockPos pos, int fortune) {
-        java.util.List<ItemStack> result = new java.util.ArrayList<>();
-        if (!this.world.isRemote) {
+    public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+        return ModEntities.SKELETON_SHEEP.create(world);
+    }
+
+    @Override
+    public List<ItemStack> onSheared(PlayerEntity player, ItemStack stack, World world, BlockPos pos, int fortune) {
+        List<ItemStack> result = new ArrayList<>();
+        if (!world.isRemote()) {
             dataManager.set(IS_SHEARED, true);
-            int i = 1 + this.rand.nextInt(3);
+            int amount = 1 + rand.nextInt(3);
 
-            for(int j = 0; j < i; ++j) {
+            for (int i = 0; i < amount; ++i) {
                 result.add(new ItemStack(Items.MUTTON));
             }
         }
-        this.playSound(SoundEvents.SKELETON_SHEEP_SHEAR, 1, 1);
+        playSound(ModSoundEvents.SKELETON_SHEEP_SHEAR, 1, 1);
         return result;
     }
 
     @Override
-    public boolean isShearable(@Nonnull ItemStack item, IWorldReader world, BlockPos pos) {
+    public boolean isShearable(ItemStack item, World world, BlockPos pos) {
         return !isSheared();
     }
 
@@ -132,8 +122,9 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
-        if (!super.processInteract(player, hand)) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+        ActionResultType actionResultType = super.func_230254_b_(player, hand);
+        if (!actionResultType.isSuccessOrConsume()) {
             ItemStack stack = player.getHeldItem(hand);
             if (stack.getItem() == Items.ROTTEN_FLESH && isSheared()) {
                 consumeItemFromStack(player, stack);
@@ -146,25 +137,25 @@ public class SkeletonSheepEntity extends UndeadAnimalEntity implements net.minec
                         world.addParticle(ParticleTypes.HAPPY_VILLAGER, getPosX() + rand.nextFloat() * getWidth() * 2 - getWidth(), getPosY() + 0.5 + rand.nextFloat() * getHeight(), getPosZ() + rand.nextFloat() * getWidth() * 2 - getWidth(), 0, 0, 0);
                     }
                 }
-                return true;
+                return ActionResultType.func_233537_a_(world.isRemote());
             }
         }
-        return false;
+        return actionResultType;
     }
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SKELETON_SHEEP_AMBIENT;
+        return ModSoundEvents.SKELETON_SHEEP_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSourceIn) {
-        return SoundEvents.SKELETON_SHEEP_HURT;
+        return ModSoundEvents.SKELETON_SHEEP_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SKELETON_SHEEP_DEATH;
+        return ModSoundEvents.SKELETON_SHEEP_DEATH;
     }
 
     protected void playStepSound(BlockPos pos, BlockState blockIn) {

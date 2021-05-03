@@ -1,5 +1,6 @@
-package bones.entity.skeleton_pig;
+package bones.client.render.model;
 
+import bones.common.entity.SkeletonPigEntity;
 import net.minecraft.client.renderer.entity.model.QuadrupedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraftforge.api.distmarker.Dist;

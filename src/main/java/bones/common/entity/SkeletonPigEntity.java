@@ -1,12 +1,14 @@
-package bones.entity.skeleton_pig;
+package bones.common.entity;
 
-import bones.entity.UndeadAnimalEntity;
-import bones.setup.Entities;
-import bones.setup.SoundEvents;
+import bones.common.init.ModEntities;
+import bones.common.init.ModItems;
+import bones.common.init.ModSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.monster.ZombiePigmanEntity;
+import net.minecraft.entity.monster.piglin.PiglinEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
@@ -16,31 +18,28 @@ import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundCategory;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.IWorld;
+import net.minecraft.world.IServerWorld;
 import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
 import javax.annotation.Nullable;
-import javax.annotation.ParametersAreNonnullByDefault;
 
-@ParametersAreNonnullByDefault
 public class SkeletonPigEntity extends UndeadAnimalEntity {
 
     private static final DataParameter<Boolean> SADDLED = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> BOOST_TIME = EntityDataManager.createKey(SkeletonPigEntity.class, DataSerializers.VARINT);
+    // TODO use BoostHelper
     private boolean boosting;
     private int boostTime;
     private int totalBoostTime;
 
-    public SkeletonPigEntity(EntityType<? extends SkeletonPigEntity> entityType, World world) {
-        super(entityType, world);
+    public SkeletonPigEntity(EntityType<? extends SkeletonPigEntity> type, World world) {
+        super(type, world);
     }
 
     @Override
@@ -48,7 +47,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
         goalSelector.addGoal(0, new SwimGoal(this));
         goalSelector.addGoal(1, new PanicGoal(this, 1.25D));
         goalSelector.addGoal(3, new BreedGoal(this, 1));
-        goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.fromItems(bones.setup.Items.PORKCHOP_ON_A_STICK), false));
+        goalSelector.addGoal(4, new TemptGoal(this, 1.2D, Ingredient.fromItems(ModItems.PORKCHOP_ON_A_STICK), false));
         goalSelector.addGoal(4, new TemptGoal(this, 1.2D, false, Ingredient.fromItems(Items.PORKCHOP)));
         goalSelector.addGoal(5, new FollowParentGoal(this, 1.1D));
         goalSelector.addGoal(6, new WaterAvoidingRandomWalkingGoal(this, 1));
@@ -56,15 +55,13 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
         goalSelector.addGoal(8, new LookRandomlyGoal(this));
     }
 
-    @Override
-    protected void registerAttributes() {
-        super.registerAttributes();
-        getAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(12);
-        getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.25D);
+    public static AttributeModifierMap.MutableAttribute createAttributes() {
+        return MobEntity.func_233666_p_()
+                .createMutableAttribute(Attributes.MAX_HEALTH, 12)
+                .createMutableAttribute(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     @Override
-    @Nullable
     public Entity getControllingPassenger() {
         return getPassengers().isEmpty() ? null : getPassengers().get(0);
     }
@@ -76,7 +73,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
             return false;
         } else {
             PlayerEntity player = (PlayerEntity) entity;
-            return player.getHeldItemMainhand().getItem() == bones.setup.Items.PORKCHOP_ON_A_STICK || player.getHeldItemOffhand().getItem() == bones.setup.Items.PORKCHOP_ON_A_STICK;
+            return player.getHeldItemMainhand().getItem() == ModItems.PORKCHOP_ON_A_STICK || player.getHeldItemOffhand().getItem() == ModItems.PORKCHOP_ON_A_STICK;
         }
     }
 
@@ -101,7 +98,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     @Override
     public void writeAdditional(CompoundNBT compound) {
         super.writeAdditional(compound);
-        compound.putBoolean("Saddle", getSaddled());
+        compound.putBoolean("Saddle", isSaddled());
     }
 
     @Override
@@ -111,18 +108,17 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    @Nullable
-    public ILivingEntityData onInitialSpawn(IWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
+    public ILivingEntityData onInitialSpawn(IServerWorld world, DifficultyInstance difficulty, SpawnReason reason, @Nullable ILivingEntityData spawnData, @Nullable CompoundNBT dataTag) {
         spawnData = super.onInitialSpawn(world, difficulty, reason, spawnData, dataTag);
-        if (world.getRandom().nextInt(50) == 0 && world.getDimension().isNether()) {
-            ZombiePigmanEntity pigman = EntityType.ZOMBIE_PIGMAN.create(this.world);
-            if (pigman != null) {
+        if (world.getRandom().nextInt(50) == 0 && reason == SpawnReason.NATURAL) {
+            PiglinEntity piglin = EntityType.PIGLIN.create(this.world);
+            if (piglin != null) {
                 setSaddled(true);
-                pigman.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, 0);
-                pigman.onInitialSpawn(world, difficulty, reason, null, null);
-                world.addEntity(pigman);
-                pigman.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(bones.setup.Items.PORKCHOP_ON_A_STICK));
-                pigman.startRiding(this);
+                piglin.setLocationAndAngles(getPosX(), getPosY(), getPosZ(), rotationYaw, 0);
+                piglin.onInitialSpawn(world, difficulty, reason, null, null);
+                world.addEntity(piglin);
+                piglin.setItemStackToSlot(EquipmentSlotType.OFFHAND, new ItemStack(ModItems.PORKCHOP_ON_A_STICK));
+                piglin.startRiding(this);
             }
         }
         return spawnData;
@@ -130,61 +126,57 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.SKELETON_PIG_AMBIENT;
+        return ModSoundEvents.SKELETON_PIG_AMBIENT;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return SoundEvents.SKELETON_PIG_HURT;
+        return ModSoundEvents.SKELETON_PIG_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.SKELETON_PIG_DEATH;
+        return ModSoundEvents.SKELETON_PIG_DEATH;
     }
 
     @Override
-    protected void playStepSound(BlockPos pos, BlockState blockIn) {
+    protected void playStepSound(BlockPos pos, BlockState block) {
         this.playSound(net.minecraft.util.SoundEvents.ENTITY_SKELETON_STEP, 0.15F, 1);
     }
 
     @Override
-    public boolean processInteract(PlayerEntity player, Hand hand) {
-        if (!super.processInteract(player, hand)) {
-            ItemStack itemstack = player.getHeldItem(hand);
-            if (itemstack.getItem() == Items.NAME_TAG) {
-                itemstack.interactWithEntity(player, this, hand);
-                return true;
-            } else if (getSaddled() && !isBeingRidden()) {
-                if (!this.world.isRemote) {
-                    player.startRiding(this);
-                }
-
-                return true;
-            } else if (itemstack.getItem() == Items.SADDLE) {
-                itemstack.interactWithEntity(player, this, hand);
-                if (isAlive() && !getSaddled() && !isChild()) {
+    public ActionResultType func_230254_b_(PlayerEntity player, Hand hand) {
+        ItemStack stack = player.getHeldItem(hand);
+        if (!isBreedingItem(stack) && !player.isSecondaryUseActive() && isSaddled() && !isBeingRidden()) {
+            if (!world.isRemote()) {
+                player.startRiding(this);
+            }
+            return ActionResultType.func_233537_a_(world.isRemote());
+        } else {
+            ActionResultType actionResultType = super.func_230254_b_(player, hand);
+            if (!actionResultType.isSuccessOrConsume()) {
+                if (!stack.isEmpty() && stack.getItem() == Items.SADDLE && !isSaddled() && isAlive() && !isChild()) {
                     setSaddled(true);
                     world.playSound(player, getPosX(), getPosY(), getPosZ(), net.minecraft.util.SoundEvents.ENTITY_PIG_SADDLE, SoundCategory.NEUTRAL, 0.5F, 1);
-                    itemstack.shrink(1);
+                    consumeItemFromStack(player, stack);
+                    return ActionResultType.func_233537_a_(world.isRemote());
                 }
-                return true;
+                return ActionResultType.PASS;
             } else {
-                return false;
+                return actionResultType;
             }
         }
-        return true;
     }
 
     @Override
     protected void dropInventory() {
         super.dropInventory();
-        if (getSaddled()) {
+        if (isSaddled()) {
             entityDropItem(Items.SADDLE);
         }
     }
 
-    public boolean getSaddled() {
+    public boolean isSaddled() {
         return dataManager.get(SADDLED);
     }
 
@@ -193,7 +185,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    public void travel(Vec3d p_213352_1_) {
+    public void travel(Vector3d motion) {
         if (this.isAlive()) {
             Entity entity = getPassengers().isEmpty() ? null : getPassengers().get(0);
             if (entity != null && isBeingRidden() && canBeSteered()) {
@@ -203,22 +195,22 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
                 setRotation(rotationYaw, rotationPitch);
                 renderYawOffset = rotationYaw;
                 rotationYawHead = rotationYaw;
-                stepHeight = 1.0F;
+                stepHeight = 1;
                 jumpMovementFactor = getAIMoveSpeed() * 0.1F;
                 if (boosting && boostTime++ > totalBoostTime) {
                     boosting = false;
                 }
 
                 if (canPassengerSteer()) {
-                    float f = (float) getAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getValue() * 0.5F;
+                    float f = (float) getAttribute(Attributes.MOVEMENT_SPEED).getValue() * 0.5F;
                     if (boosting) {
                         f += f * 1.15F * MathHelper.sin(boostTime / (float) totalBoostTime * (float) Math.PI);
                     }
 
                     setAIMoveSpeed(f);
-                    super.travel(new Vec3d(0, 0, 1));
+                    super.travel(new Vector3d(0, 0, 1));
                 } else {
-                    setMotion(Vec3d.ZERO);
+                    setMotion(Vector3d.ZERO);
                 }
 
                 prevLimbSwingAmount = limbSwingAmount;
@@ -234,7 +226,7 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
             } else {
                 stepHeight = 0.5F;
                 jumpMovementFactor = 0.02F;
-                super.travel(p_213352_1_);
+                super.travel(motion);
             }
         }
     }
@@ -252,8 +244,8 @@ public class SkeletonPigEntity extends UndeadAnimalEntity {
     }
 
     @Override
-    public SkeletonPigEntity createChild(AgeableEntity entity) {
-        return Entities.SKELETON_PIG.create(world);
+    public AgeableEntity func_241840_a(ServerWorld world, AgeableEntity parent) {
+        return ModEntities.SKELETON_PIG.create(world);
     }
 
     @Override

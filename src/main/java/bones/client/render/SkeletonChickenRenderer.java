@@ -1,14 +1,13 @@
-package bones.entity.skeleton_chicken;
+package bones.client.render;
 
 import bones.Bones;
+import bones.common.entity.SkeletonChickenEntity;
+import bones.client.render.model.SkeletonChickenModel;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 public class SkeletonChickenRenderer extends MobRenderer<SkeletonChickenEntity, SkeletonChickenModel> {
 
     private static final ResourceLocation CHICKEN_TEXTURES = new ResourceLocation(Bones.MODID, "textures/entity/skeleton_chicken.png");

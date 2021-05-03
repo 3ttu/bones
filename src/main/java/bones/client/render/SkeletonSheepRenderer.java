@@ -1,15 +1,15 @@
-package bones.entity.skeleton_sheep;
+package bones.client.render;
 
 import bones.Bones;
+import bones.client.render.layer.SkeletonSheepFleshLayer;
+import bones.client.render.model.SkeletonSheepModel;
+import bones.common.entity.SkeletonSheepEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.ParametersAreNonnullByDefault;
-
-@ParametersAreNonnullByDefault
 @OnlyIn(Dist.CLIENT)
 public class SkeletonSheepRenderer extends MobRenderer<SkeletonSheepEntity, SkeletonSheepModel> {
 

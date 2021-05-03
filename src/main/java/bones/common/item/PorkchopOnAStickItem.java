@@ -1,6 +1,6 @@
-package bones.item;
+package bones.common.item;
 
-import bones.entity.skeleton_pig.SkeletonPigEntity;
+import bones.common.entity.SkeletonPigEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
