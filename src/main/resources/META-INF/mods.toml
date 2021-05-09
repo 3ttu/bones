@@ -5,7 +5,7 @@ issueTrackerURL = "https://github.com/ochotonida/bones/issues"
 
 [[mods]]
 modId="bones"
-version="1.16.5-2.0.0"
+version="1.16.5-2.1.0"
 displayName="Bones"
 displayURL="https://minecraft.curseforge.com/projects/bones"
 logoFile="logo.png"
