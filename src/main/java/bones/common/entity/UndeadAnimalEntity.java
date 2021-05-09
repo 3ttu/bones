@@ -21,4 +21,9 @@ public abstract class UndeadAnimalEntity extends AnimalEntity {
     public boolean canSpawn(IWorld world, SpawnReason spawnReason) {
         return true;
     }
+
+    @Override
+    public int getMaxSpawnedInChunk() {
+        return 8;
+    }
 }

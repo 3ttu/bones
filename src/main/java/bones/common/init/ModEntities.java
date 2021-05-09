@@ -1,5 +1,7 @@
 package bones.common.init;
 
+import bones.common.config.EntityConfig;
+import bones.common.config.ModConfig;
 import bones.common.entity.SkeletonChickenEntity;
 import bones.client.render.SkeletonChickenRenderer;
 import bones.common.entity.SkeletonCowEntity;
@@ -10,7 +12,6 @@ import bones.common.entity.SkeletonSheepEntity;
 import bones.client.render.SkeletonSheepRenderer;
 import net.minecraft.entity.*;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.MobSpawnInfo;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraftforge.event.RegistryEvent;
@@ -59,11 +60,15 @@ public class ModEntities {
     }
 
     public static void addSpawns(BiomeLoadingEvent event) {
-        if (event.getCategory() == Biome.Category.NETHER) {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(SKELETON_SHEEP, 50, 2, 6));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(SKELETON_PIG, 50, 2, 6));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(SKELETON_COW, 50, 2, 6));
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(SKELETON_CHICKEN, 50, 2, 6));
+        addSpawn(event, SKELETON_SHEEP, ModConfig.COMMON.skeleton_sheep);
+        addSpawn(event, SKELETON_PIG, ModConfig.COMMON.skeleton_pig);
+        addSpawn(event, SKELETON_COW, ModConfig.COMMON.skeleton_cow);
+        addSpawn(event, SKELETON_CHICKEN, ModConfig.COMMON.skeleton_chicken);
+    }
+
+    private static void addSpawn(BiomeLoadingEvent event, EntityType<?> type, EntityConfig config) {
+        if (config.canSpawnIn(event.getName(), event.getCategory())) {
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(type, config.weight.get(), config.minRolls.get(), config.maxRolls.get()));
         }
     }
 
