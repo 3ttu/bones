@@ -1,0 +1,33 @@
+{
+  "bones.subtitle.skeleton_sheep.ambient": "Овца-скелет блеет",
+  "bones.subtitle.skeleton_sheep.death": "Овца-скелет умирает",
+  "bones.subtitle.skeleton_sheep.hurt": "Овца-скелет ранена",
+  "bones.subtitle.skeleton_sheep.shear": "Овца-скелет обстрижена",
+  "bones.subtitle.skeleton_pig.ambient": "Свинья-скелет хрюкает",
+  "bones.subtitle.skeleton_pig.death": "Свинья-скелет умирает",
+  "bones.subtitle.skeleton_pig.hurt": "Свинья-скелет ранена",
+  "bones.subtitle.skeleton_cow.ambient": "Корова-скелет мычит",
+  "bones.subtitle.skeleton_cow.death": "Корова-скелет умирает",
+  "bones.subtitle.skeleton_cow.hurt": "Корова-скелет ранена",
+  "bones.subtitle.skeleton_chicken.ambient": "Курица-скелет кудахчет",
+  "bones.subtitle.skeleton_chicken.death": "Курица-скелет умирает",
+  "bones.subtitle.skeleton_chicken.hurt": "Курица-скелет ранена",
+
+  "entity.bones.skeleton_sheep": "Овца-скелет",
+  "entity.bones.skeleton_pig": "Свинья-скелет",
+  "entity.bones.skeleton_cow": "Корова-скелет",
+  "entity.bones.skeleton_chicken": "Курица-скелет",
+
+  "item.bones.skeleton_sheep_spawn_egg": "Яйцо призыва овцы-скелета",
+  "item.bones.skeleton_pig_spawn_egg": "Яйцо призыва свиньи-скелета",
+  "item.bones.skeleton_cow_spawn_egg": "Яйцо призыва коровы-скелета",
+  "item.bones.skeleton_chicken_spawn_egg": "Яйцо призыва курицы-скелета",
+
+  "item.bones.porkchop_on_a_stick": "Удочка со свининой",
+
+  "bones.config.common.spawning.biome_blacklist": "Чёрный лист биомов",
+  "bones.config.common.spawning.biome_categories": "Категория биома",
+  "bones.config.common.spawning.weight": "Вес спавна",
+  "bones.config.common.spawning.min_rolls": "Минимальное количество спавна мобов",
+  "bones.config.common.spawning.max_rolls": "Максимальное количество спавна мобов"
+}
